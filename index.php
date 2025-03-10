@@ -10,8 +10,8 @@
 
 <body>
     <div class="container my-5">
-        <h2>LIst of Clients</h2>
-        <a href="./crud.php" class=" btn btn-primary" role="button">ADD</a>
+        <h2>List of Clients</h2>
+        <a href="./insert.php" class=" btn btn-primary" role="button">New Client</a>
 
         <br>
         <table class="table">
@@ -35,35 +35,54 @@
                 $password = "";
                 $db_name = "phpmysql";
 
-                $conneciton = new mysqli($servername, $username, $password, $db_name);
+                $connection = new mysqli($servername, $username, $password, $db_name);
 
-                if ($conneciton) {
+                if ($connection) {
                     echo "db connected successfully";
                 } else {
-                    echo "Error occured : " . $conneciton->connect_error;
+                    echo "Error occured : " . $connection->connect_error;
                 }
 
+
+                /*
+                *****************
+                INSERT VALUES
+                **************
                 $query = "INSERT INTO clients(name,email,phone,address)
                 VALUES ('varathan','kugan@gmail.com','0775019192','no 168yogaputarm')";
 
-                if ($conneciton->query($query) === "TRUE") {
+                // Execute the query
+                if ($connection->query($query) === TRUE) {
                     echo "Insert successfully";
                 } else {
-                    echo "Error" . $conneciton->connect_error;
+                    echo "Error: " . $connection->connect_error;
+                }*/
+
+
+                /*
+                 *****************
+              SELECT VALUES
+                **************
+                */
+                $query = "SELECT * FROM clients";
+                $result = $connection->query($query);
+                while ($row = $result->fetch_assoc()) {
+                    echo " 
+                    <tr>
+                        <td>$row[id]</td>
+                        <td>$row[name]</td>
+                        <td>$row[email]</td>
+                        <td>$row[phone]</td>
+                        <td>$row[address]</td>
+                        <td>$row[created_at]</td>
+                        <td>
+                            <a class='btn btn-primary'  href='./edit.php?id=$row[id]'>Edit</a>
+                            <a class='btn btn-danger' href='./delete.php?id=$row[id]'>Delete</a>
+                        </td>
+                 </tr>";
                 }
                 ?>
-                <tr>
-                    <td>1</td>
-                    <td>kugan</td>
-                    <td>kugan@gmail.com</td>
-                    <td>099898</td>
-                    <td>no 30 gdsfs</td>
-                    <td>2025.09.09</td>
-                    <td>
-                        <a class="btn btn-primary " href="./edit.php">Edit</a>
-                        <a class="btn btn-danger" href="./delete.php">Delete</a>
-                    </td>
-                </tr>
+
             </tbody>
         </table>
 
