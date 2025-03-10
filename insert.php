@@ -17,8 +17,22 @@ do {
         $errorMessage = "All th fields are required";
         break;
     }
-    // insert client into database 
+
     $successMessage = "clinet added successfully";
+
+    include("database.php");
+
+    // insert client into database 
+    $query = "INSERT INTO clients(name,email,phone,address) VALUES
+    ('$name','$email','$phonenumber','$address')";
+
+    $result = $connection->query($query);
+
+    if (!$result) {
+        $errorMessage = "Invalid query : " . $connection->error;
+        break;
+    }
+    header("Location:index.php");
 } while (false);
 
 ?>
