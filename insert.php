@@ -3,6 +3,23 @@ $name = "";
 $email = "";
 $phonenumber = "";
 $address = "";
+$errorMessage = "";
+$successMessage = "";
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phonenumber = $_POST['phonenumber'];
+    $address = $_POST['address'];
+}
+do {
+    if (empty($name) || empty($email) || empty($phonenumber) || empty($address)) {
+        $errorMessage = "All th fields are required";
+        break;
+    }
+    // insert client into database 
+    $successMessage = "clinet added successfully";
+} while (false);
 
 ?>
 
@@ -21,9 +38,21 @@ $address = "";
 </head>
 
 <body>
+    <!-- bg-danger bg-gradient -->
 
-    <div class="container my-5">
+    <div class="container p-3 my-5 ">
         <h2>New Client</h2>
+        <?php
+        if (!empty($errorMessage)) {
+            echo "
+            <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                <strong>$errorMessage</strong>
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>
+            ";
+        }
+        ?>
+
         <form action="insert.php" method="post">
             <div class="row mb-3">
                 <label for="" class="col-sm-3 col-form-label">Name</label>
@@ -33,7 +62,7 @@ $address = "";
             </div>
             <div class="row mb-3">
                 <label for="" class="col-sm-3 col-form-label">Email</label>
-                <div class="col-sm-9">
+                <div class="col-sm-6">
                     <input type="email" class="form-control" name="email" value="<?php echo $email ?>">
                 </div>
             </div>
@@ -46,16 +75,34 @@ $address = "";
             <div class="row mb-3">
                 <label for="" class="col-sm-3 col-form-label">Address</label>
                 <div class="col-sm-8">
-                    <input class="form-control" name="address" value="<?php echo $name ?>"> </input>
+                    <input class="form-control" name="address" value="<?php echo $address ?>"> </input>
                 </div>
             </div>
+
+            <!-- success message -->
+
+            <?php
+            if (!empty($successMessage)) {
+                echo "
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                    <strong>$successMessage</strong>
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>
+                ";
+            }
+            ?>
+
             <div class=" row mb-3">
                 <div class="offset-sm-3 col-sm-3 d-grid">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-sm-3 d-grid">
+                    <a type="submit" class="btn btn-outline-primary">Reset</a>
+                </div>
+                <div class="col-sm-3 d-grid">
                     <a type="submit" class="btn btn-outline-primary" href="./index.php">Cancel</a>
                 </div>
+
             </div>
         </form>
     </div>
