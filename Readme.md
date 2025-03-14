@@ -1,5 +1,5 @@
 ### Home
-![Home](./screenshot/home.jpg)
+![Home](./screenshot/home.JPG)
 
 ### Add Page
-![Add Page](./screenshot/addclient.jpg)
+![Add Page](./screenshot/addclient.JPG)
